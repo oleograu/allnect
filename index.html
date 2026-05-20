@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Allnect - Preview Interativo</title>
+  <title>Minha Rede - Preview Interativo</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <section id="welcomeSection" class="welcome-section">
     <div class="welcome-shell">
       <div class="welcome-copy">
-        <span class="welcome-badge">Allnect</span>
+        <span class="welcome-badge">Minha Rede</span>
         <h1>Entre na rede e crie seu perfil</h1>
         <p>Cadastre seu nome, contato e como voce quer aparecer para começar a publicar, conversar, abrir stories e usar o marketplace.</p>
         <div class="welcome-highlights">
@@ -198,137 +198,3 @@
               </div>
               <span class="chip" id="storyChip">Toque para abrir</span>
             </div>
-            <div id="storiesList" class="stories-list"></div>
-          </div>
-        </section>
-
-        <section id="reelsSection" class="card reels-card">
-          <div class="card-pad">
-            <div class="card-title-row">
-              <div>
-                <h3>Reels</h3>
-                <div id="reelsSummary" class="small-copy"></div>
-              </div>
-              <span class="chip" id="reelsChip">Abrir em destaque</span>
-            </div>
-            <div id="reelsList" class="reels-list"></div>
-          </div>
-        </section>
-
-        <section id="marketplacePageSection" class="card marketplace-page hidden"></section>
-
-        <div id="feedHeading" class="section-heading">
-          <div>
-            <h3 id="feedTitle">Feed principal</h3>
-            <div id="feedSummary" class="small-copy"></div>
-          </div>
-          <button class="button-soft" data-action="focus-composer">Novo conteudo</button>
-        </div>
-
-        <section id="postsList" class="posts-list"></section>
-        <section id="emptyState" class="card empty-card hidden">
-          Nenhum resultado encontrado para essa busca. Tente outro termo ou publique algo novo.
-        </section>
-      </section>
-
-      <aside id="sidebarColumn">
-        <section class="card profile-card">
-          <div class="card-pad">
-            <div class="card-title-row">
-              <div>
-                <h3>Seu resumo</h3>
-                <div class="small-copy">Tudo o que voce fizer aqui atualiza esse painel.</div>
-              </div>
-              <span class="chip" id="profileStatus">Explorando</span>
-            </div>
-
-            <div class="profile-head">
-              <img id="profileAvatar" class="avatar" src="" alt="Perfil" />
-              <div>
-                <strong id="profileName"></strong>
-                <div id="profileSubtitle" class="small-copy"></div>
-              </div>
-            </div>
-
-            <div class="profile-summary">
-              <p id="profileBioPreview"></p>
-              <p id="profileMetaLine" class="small-copy"></p>
-            </div>
-
-            <div class="profile-grid">
-              <div class="profile-stat">
-                <strong id="statPosts">0</strong>
-                <span class="small-copy">Posts no feed</span>
-              </div>
-              <div class="profile-stat">
-                <strong id="statLikes">0</strong>
-                <span class="small-copy">Curtidas dadas</span>
-              </div>
-              <div class="profile-stat">
-                <strong id="statFriends">0</strong>
-                <span class="small-copy">Amigos adicionados</span>
-              </div>
-              <div class="profile-stat">
-                <strong id="statStories">0</strong>
-                <span class="small-copy">Stories vistos</span>
-              </div>
-            </div>
-
-            <div class="profile-actions">
-              <button class="button-outline" data-action="open-profile-settings">Configurar perfil</button>
-              <button class="button-primary" data-action="open-profile">Ver perfil completo</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="card trending-card">
-          <div class="card-pad">
-            <div class="card-title-row">
-              <div>
-                <h3>Assuntos em alta</h3>
-                <div id="trendingSummary" class="small-copy"></div>
-              </div>
-              <span class="chip" id="trendingChip">Em movimento</span>
-            </div>
-            <div id="trendingList" class="trending-list"></div>
-          </div>
-        </section>
-
-        <section id="marketplaceSection" class="card marketplace-card">
-          <div class="card-pad">
-            <div class="card-title-row">
-              <div>
-                <h3>Marketplace</h3>
-                <div id="productsSummary" class="small-copy"></div>
-              </div>
-              <button class="button-primary" data-action="open-sell-modal">Vender</button>
-            </div>
-            <div id="productsList" class="product-list"></div>
-          </div>
-        </section>
-
-        <section id="friendsSection" class="card friends-card">
-          <div class="card-pad">
-            <div class="card-title-row">
-              <div>
-                <h3>Sugestoes de amizade</h3>
-                <div id="friendsSummary" class="small-copy"></div>
-              </div>
-              <span class="chip" id="friendsChip">Conecte-se</span>
-            </div>
-            <div id="friendsList" class="friends-list"></div>
-          </div>
-        </section>
-      </aside>
-    </main>
-  </div>
-
-  <div id="notificationsDrawer" class="drawer hidden"></div>
-  <div id="chatDrawer" class="chat-drawer hidden"></div>
-  <div id="modalLayer" class="overlay hidden"></div>
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-

@@ -1,0 +1,334 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minha Rede - Preview Interativo</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section id="welcomeSection" class="welcome-section">
+    <div class="welcome-shell">
+      <div class="welcome-copy">
+        <span class="welcome-badge">Minha Rede</span>
+        <h1>Entre na rede e crie seu perfil</h1>
+        <p>Cadastre seu nome, contato e como voce quer aparecer para começar a publicar, conversar, abrir stories e usar o marketplace.</p>
+        <div class="welcome-highlights">
+          <span class="welcome-highlight">Feed social</span>
+          <span class="welcome-highlight">Stories e reels</span>
+          <span class="welcome-highlight">Chat e marketplace</span>
+        </div>
+      </div>
+      <div class="welcome-card">
+        <div class="card-title-row">
+          <div>
+            <h3>Registrar perfil</h3>
+            <div class="small-copy">Preencha os dados principais para entrar.</div>
+          </div>
+          <span class="chip">Inicio</span>
+        </div>
+        <form id="registrationForm" class="welcome-form">
+          <div class="field-grid">
+            <input class="inline-input" name="register-name" type="text" placeholder="Seu nome" />
+            <input class="inline-input" name="register-email" type="email" placeholder="Seu email" />
+            <input class="inline-input" name="register-location" type="text" placeholder="Cidade e estado" />
+            <input class="inline-input" name="register-work" type="text" placeholder="Profissao ou area" />
+            <input class="inline-input full" name="register-tagline" type="text" placeholder="Frase principal do perfil" />
+          </div>
+          <div class="welcome-actions">
+            <button class="button-primary" type="submit">Registrar e entrar</button>
+            <button class="button-outline" type="button" data-action="continue-demo">Entrar na demo</button>
+          </div>
+        </form>
+        <div class="welcome-stats">
+          <div class="profile-stat">
+            <strong id="welcomePostsCount">0</strong>
+            <span class="small-copy">posts prontos</span>
+          </div>
+          <div class="profile-stat">
+            <strong id="welcomeProductsCount">0</strong>
+            <span class="small-copy">anuncios ativos</span>
+          </div>
+          <div class="profile-stat">
+            <strong id="welcomePeopleCount">0</strong>
+            <span class="small-copy">perfis na rede</span>
+          </div>
+          <div class="profile-stat">
+            <strong id="welcomeChatCount">0</strong>
+            <span class="small-copy">conversas abertas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-box">
+        <button class="brand-mark" data-action="go-home" title="Ir para o inicio" aria-label="Ir para o inicio">MR</button>
+        <label class="search-box" for="searchInput">
+          <span class="search-icon">IR</span>
+          <input id="searchInput" type="text" placeholder="Pesquisar pessoas, posts, produtos e comentarios..." />
+        </label>
+      </div>
+
+      <div class="nav-row">
+        <button class="nav-pill" data-action="open-reels" title="Reels" aria-label="Reels">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="4" y="4" width="16" height="16" rx="4" />
+              <path d="M9 4v4" />
+              <path d="M15 4v4" />
+              <path d="m11 10 4 2-4 2z" />
+            </svg>
+          </strong>
+        </button>
+        <button class="nav-pill" data-action="open-marketplace" title="Marketplace" aria-label="Marketplace">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 9.5 6.5 5h11L19 9.5" />
+              <path d="M4.5 9.5h15v9a2 2 0 0 1-2 2h-11a2 2 0 0 1-2-2z" />
+              <path d="M9.5 13h5" />
+            </svg>
+          </strong>
+        </button>
+        <button class="nav-pill" data-action="toggle-notifications" title="Alertas" aria-label="Alertas">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 9a6 6 0 1 1 12 0v4.5l1.5 3H4.5l1.5-3Z" />
+              <path d="M10 19a2 2 0 0 0 4 0" />
+            </svg>
+          </strong>
+          <span id="alertBadge" class="badge hidden">0</span>
+        </button>
+        <button class="nav-pill" data-action="toggle-chat" title="Chat" aria-label="Chat">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 6.5A3.5 3.5 0 0 1 8.5 3h7A3.5 3.5 0 0 1 19 6.5v5A3.5 3.5 0 0 1 15.5 15H10l-4 4v-4A3.5 3.5 0 0 1 5 11.5Z" />
+            </svg>
+          </strong>
+          <span id="chatBadge" class="badge hidden">0</span>
+        </button>
+        <button class="nav-pill" data-action="open-admin" title="Admin" aria-label="Admin">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4.5 18.5 8v8L12 19.5 5.5 16V8Z" />
+              <path d="M12 4.5V12" />
+              <path d="m18.5 8-6.5 3.9L5.5 8" />
+            </svg>
+          </strong>
+        </button>
+        <button class="nav-pill" data-action="open-profile" title="Perfil" aria-label="Perfil">
+          <strong>
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4.5 20a7.5 7.5 0 0 1 15 0" />
+            </svg>
+          </strong>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="shell">
+    <section id="searchResultsSection" class="card search-results-card hidden">
+      <div class="card-pad">
+        <div class="card-title-row">
+          <div>
+            <h3>Resultados da busca</h3>
+            <div id="searchResultsSummary" class="small-copy"></div>
+          </div>
+          <span class="chip">Busca global</span>
+        </div>
+        <div id="searchResultsGrid" class="search-results-grid"></div>
+      </div>
+    </section>
+
+    <main id="mainLayout" class="layout">
+      <section id="mainColumn">
+        <section id="composerCard" class="card composer-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Escreva um novo post</h3>
+                <div class="small-copy">Publique algo agora mesmo e veja o feed atualizar na hora.</div>
+              </div>
+              <span class="chip">Demo pronta</span>
+            </div>
+
+            <div class="composer-top">
+              <img id="currentUserAvatar" class="avatar" src="" alt="Usuario atual" />
+              <div class="composer-meta">
+                <strong id="currentUserName"></strong>
+                <span id="currentUserTagline"></span>
+              </div>
+            </div>
+
+            <form id="composerForm" class="composer-form">
+              <textarea id="composerText" placeholder="O que voce quer compartilhar hoje?"></textarea>
+              <div class="composer-toolbar">
+                <button id="composerFilesButton" type="button" class="composer-tool" data-action="toggle-composer-files">Adicionar arquivos</button>
+                <button id="composerCheckinButton" type="button" class="composer-tool" data-action="toggle-composer-checkin">Check-in</button>
+                <button id="composerFeelingButton" type="button" class="composer-tool" data-action="toggle-composer-feeling">Sentimento / atividade</button>
+              </div>
+              <div class="composer-extra-panels">
+                <div id="composerFilesPanel" class="composer-extra">
+                  <input id="composerAttachment" class="inline-input" type="text" placeholder="Nome do arquivo ou anexo" />
+                </div>
+                <div id="composerCheckinPanel" class="composer-extra">
+                  <input id="composerCheckin" class="inline-input" type="text" placeholder="Onde voce esta?" />
+                </div>
+                <div id="composerFeelingPanel" class="composer-extra">
+                  <input id="composerFeeling" class="inline-input" type="text" placeholder="Ex.: feliz, trabalhando, assistindo..." />
+                </div>
+              </div>
+              <div class="composer-actions">
+                <button type="button" class="button-outline" data-action="clear-composer">Limpar</button>
+                <button type="submit" class="button-primary">Publicar post</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <section id="storiesSection" class="card stories-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Stories</h3>
+                <div id="storiesSummary" class="small-copy"></div>
+              </div>
+              <span class="chip" id="storyChip">Toque para abrir</span>
+            </div>
+            <div id="storiesList" class="stories-list"></div>
+          </div>
+        </section>
+
+        <section id="reelsSection" class="card reels-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Reels</h3>
+                <div id="reelsSummary" class="small-copy"></div>
+              </div>
+              <span class="chip" id="reelsChip">Abrir em destaque</span>
+            </div>
+            <div id="reelsList" class="reels-list"></div>
+          </div>
+        </section>
+
+        <section id="marketplacePageSection" class="card marketplace-page hidden"></section>
+
+        <div id="feedHeading" class="section-heading">
+          <div>
+            <h3 id="feedTitle">Feed principal</h3>
+            <div id="feedSummary" class="small-copy"></div>
+          </div>
+          <button class="button-soft" data-action="focus-composer">Novo conteudo</button>
+        </div>
+
+        <section id="postsList" class="posts-list"></section>
+        <section id="emptyState" class="card empty-card hidden">
+          Nenhum resultado encontrado para essa busca. Tente outro termo ou publique algo novo.
+        </section>
+      </section>
+
+      <aside id="sidebarColumn">
+        <section class="card profile-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Seu resumo</h3>
+                <div class="small-copy">Tudo o que voce fizer aqui atualiza esse painel.</div>
+              </div>
+              <span class="chip" id="profileStatus">Explorando</span>
+            </div>
+
+            <div class="profile-head">
+              <img id="profileAvatar" class="avatar" src="" alt="Perfil" />
+              <div>
+                <strong id="profileName"></strong>
+                <div id="profileSubtitle" class="small-copy"></div>
+              </div>
+            </div>
+
+            <div class="profile-summary">
+              <p id="profileBioPreview"></p>
+              <p id="profileMetaLine" class="small-copy"></p>
+            </div>
+
+            <div class="profile-grid">
+              <div class="profile-stat">
+                <strong id="statPosts">0</strong>
+                <span class="small-copy">Posts no feed</span>
+              </div>
+              <div class="profile-stat">
+                <strong id="statLikes">0</strong>
+                <span class="small-copy">Curtidas dadas</span>
+              </div>
+              <div class="profile-stat">
+                <strong id="statFriends">0</strong>
+                <span class="small-copy">Amigos adicionados</span>
+              </div>
+              <div class="profile-stat">
+                <strong id="statStories">0</strong>
+                <span class="small-copy">Stories vistos</span>
+              </div>
+            </div>
+
+            <div class="profile-actions">
+              <button class="button-outline" data-action="open-profile-settings">Configurar perfil</button>
+              <button class="button-primary" data-action="open-profile">Ver perfil completo</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card trending-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Assuntos em alta</h3>
+                <div id="trendingSummary" class="small-copy"></div>
+              </div>
+              <span class="chip" id="trendingChip">Em movimento</span>
+            </div>
+            <div id="trendingList" class="trending-list"></div>
+          </div>
+        </section>
+
+        <section id="marketplaceSection" class="card marketplace-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Marketplace</h3>
+                <div id="productsSummary" class="small-copy"></div>
+              </div>
+              <button class="button-primary" data-action="open-sell-modal">Vender</button>
+            </div>
+            <div id="productsList" class="product-list"></div>
+          </div>
+        </section>
+
+        <section id="friendsSection" class="card friends-card">
+          <div class="card-pad">
+            <div class="card-title-row">
+              <div>
+                <h3>Sugestoes de amizade</h3>
+                <div id="friendsSummary" class="small-copy"></div>
+              </div>
+              <span class="chip" id="friendsChip">Conecte-se</span>
+            </div>
+            <div id="friendsList" class="friends-list"></div>
+          </div>
+        </section>
+      </aside>
+    </main>
+  </div>
+
+  <div id="notificationsDrawer" class="drawer hidden"></div>
+  <div id="chatDrawer" class="chat-drawer hidden"></div>
+  <div id="modalLayer" class="overlay hidden"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

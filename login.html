@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Allnect</title>
+  <style>
+    :root {
+      --bg: #eef3f7;
+      --bg-strong: #dfe8f2;
+      --card: rgba(255, 255, 255, 0.9);
+      --card-solid: #ffffff;
+      --text: #162235;
+      --muted: #637086;
+      --line: rgba(102, 125, 156, 0.18);
+      --brand: #ff6f61;
+      --brand-dark: #ef5b4d;
+      --blue: #2d6cdf;
+      --blue-dark: #1f57ba;
+      --green: #18936d;
+      --gold: #f4b942;
+      --shadow: 0 22px 44px rgba(25, 42, 70, 0.12);
+      --soft-shadow: 0 14px 30px rgba(25, 42, 70, 0.08);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(255, 111, 97, 0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(45, 108, 223, 0.2), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    body[data-theme="blackout"] {
+      --bg: #0b1016;
+      --bg-strong: #111824;
+      --card: rgba(16, 22, 32, 0.9);
+      --card-solid: #141b26;
+      --text: #edf3ff;
+      --muted: #9caec7;
+      --line: rgba(133, 153, 186, 0.2);
+      --shadow: 0 24px 48px rgba(2, 6, 12, 0.42);
+      --soft-shadow: 0 14px 30px rgba(2, 6, 12, 0.28);
+      background:
+        radial-gradient(circle at top left, rgba(255, 111, 97, 0.12), transparent 22%),
+        radial-gradient(circle at top right, rgba(45, 108, 223, 0.16), transparent 28%),
+        linear-gradient(180deg, #0a0f15 0%, #0f1722 100%);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      border: 0;
+      background: none;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .auth-card {
+      background: var(--card-solid);
+      border: 1px solid rgba(112, 137, 170, 0.16);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      padding: 48px 32px;
+      backdrop-filter: blur(12px);
+    }
+
+    body[data-theme="blackout"] .auth-card {
+      background: rgba(16, 22, 32, 0.96);
+      border-color: rgba(133, 153, 186, 0.18);
+    }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--brand), #f7a44c);
+      box-shadow: 0 12px 26px rgba(255, 111, 97, 0.28);
+    }
+
+    .auth-brand h1 {
+      margin: 0;
+      font-size: 32px;
+      background: linear-gradient(135deg, var(--brand), #ff8c55);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 32px;
+      line-height: 1.5;
+    }
+
+    .auth-form-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form[data-active="true"] {
+      display: block;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .auth-form h2 {
+      margin: 0 0 8px;
+      font-size: 24px;
+      color: var(--text);
+    }
+
+    .auth-form-subtitle {
+      margin: 0 0 24px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid rgba(102, 125, 156, 0.22);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--text);
+      font-size: 14px;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      outline: 0;
+    }
+
+    body[data-theme="blackout"] .form-group input {
+      background: rgba(29, 40, 58, 0.92);
+      border-color: rgba(133, 153, 186, 0.18);
+      color: var(--text);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(255, 111, 97, 0.46);
+      box-shadow: 0 0 0 4px rgba(255, 111, 97, 0.09);
+    }
+
+    .form-group input::placeholder {
+      color: var(--muted);
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      background: none;
+      border: none;
+      text-align: left;
+      justify-content: flex-start;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--brand);
+    }
+
+    .checkbox-label strong {
+      color: var(--text);
+    }
+
+    .form-error {
+      color: #e74c3c;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .button-primary {
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      color: #fff;
+      background: linear-gradient(135deg, var(--brand), #ff8c55);
+      box-shadow: 0 12px 24px rgba(255, 111, 97, 0.22);
+      border: 0;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .button-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(255, 111, 97, 0.28);
+    }
+
+    .button-primary:active {
+      transform: translateY(0);
+    }
+
+    .button-outline {
+      min-height: 46px;
+      padding: 0 16px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      border: 1px solid rgba(102, 125, 156, 0.22);
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--text);
+      cursor: pointer;
+      width: 100%;
+    }
+
+    body[data-theme="blackout"] .button-outline {
+      background: rgba(29, 40, 58, 0.92);
+      border-color: rgba(133, 153, 186, 0.18);
+      color: var(--text);
+    }
+
+    .button-outline:hover {
+      transform: translateY(-1px);
+    }
+
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 20px 0;
+    }
+
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(102, 125, 156, 0.18);
+    }
+
+    .auth-footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(102, 125, 156, 0.12);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .auth-footer p {
+      margin: 0;
+    }
+
+    .toggle-form-link {
+      color: var(--brand);
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .toggle-form-link:hover {
+      color: var(--brand-dark);
+    }
+
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(112, 137, 170, 0.16);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 12px rgba(25, 42, 70, 0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    body[data-theme="blackout"] .theme-toggle {
+      background: rgba(16, 22, 32, 0.96);
+      border-color: rgba(133, 153, 186, 0.18);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: var(--text);
+      color: #fff;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+      transition: transform 0.3s ease;
+      z-index: 50;
+      white-space: nowrap;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast.is-visible {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      .auth-card {
+        padding: 32px 24px;
+      }
+
+      .auth-brand h1 {
+        font-size: 28px;
+      }
+
+      .auth-form h2 {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="light">
+  <button class="theme-toggle" id="themeToggle" title="Alternar tema">🌙</button>
+
+  <div class="container">
+    <div class="auth-card">
+      <!-- Brand -->
+      <div class="auth-brand">
+        <div class="brand-mark">A</div>
+        <h1>Allnect</h1>
+      </div>
+
+      <p class="auth-subtitle">
+        Uma rede social completa para conectar pessoas, compartilhar momentos e explorar oportunidades.
+      </p>
+
+      <!-- Forms Wrapper -->
+      <div class="auth-form-wrapper">
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form" data-active="true">
+          <h2>Bem-vindo de volta</h2>
+          <p class="auth-form-subtitle">Faça login para continuar sua jornada social</p>
+
+          <form id="loginFormElement">
+            <div class="form-group">
+              <input
+                type="email"
+                name="login-email"
+                placeholder="Email ou usuário"
+                required
+              />
+              <input
+                type="password"
+                name="login-password"
+                placeholder="Senha"
+                required
+              />
+              <div id="loginError" class="form-error"></div>
+            </div>
+
+            <button type="submit" class="button-primary">Entrar na Allnect</button>
+          </form>
+
+          <div class="auth-divider">ou</div>
+
+          <button
+            type="button"
+            class="button-outline"
+            onclick="switchToRegister()"
+          >
+            Criar uma conta nova
+          </button>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="auth-form">
+          <h2>Junte-se a Allnect</h2>
+          <p class="auth-form-subtitle">
+            Crie sua conta e comece a conectar com pessoas
+          </p>
+
+          <form id="registerFormElement">
+            <div class="form-group">
+              <input
+                type="text"
+                name="register-name"
+                placeholder="Nome completo"
+                required
+              />
+              <input
+                type="email"
+                name="register-email"
+                placeholder="Email"
+                required
+              />
+              <input
+                type="password"
+                name="register-password"
+                placeholder="Crie uma senha (mínimo 6 caracteres)"
+                minlength="6"
+                required
+              />
+              <input
+                type="password"
+                name="register-confirm"
+                placeholder="Confirme a senha"
+                required
+              />
+              <div id="registerError" class="form-error"></div>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" name="register-terms" required />
+              <span>Eu concordo com os <strong>Termos de Serviço</strong></span>
+            </label>
+
+            <button type="submit" class="button-primary">Criar minha conta</button>
+          </form>
+
+          <button
+            type="button"
+            class="button-outline"
+            onclick="switchToLogin()"
+          >
+            Já tem conta? Faça login
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="auth-footer">
+        <p>Allnect © 2026 - Uma experiência social conectada</p>
+        <p>
+          <a href="#" style="color: inherit; text-decoration: none;">Termos</a> •
+          <a href="#" style="color: inherit; text-decoration: none;">Privacidade</a> •
+          <a href="#" style="color: inherit; text-decoration: none;">Contato</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "allnect-auth-v2";
+    let toastTimer = null;
+
+    // Theme Management
+    function applyTheme() {
+      const theme = localStorage.getItem("allnect-theme") || "light";
+      document.body.setAttribute("data-theme", theme);
+      const themeToggle = document.getElementById("themeToggle");
+      themeToggle.textContent = theme === "blackout" ? "☀️" : "🌙";
+    }
+
+    document.getElementById("themeToggle").addEventListener("click", function () {
+      const currentTheme = document.body.getAttribute("data-theme");
+      const newTheme = currentTheme === "blackout" ? "light" : "blackout";
+      document.body.setAttribute("data-theme", newTheme);
+      localStorage.setItem("allnect-theme", newTheme);
+      applyTheme();
+      showToast(newTheme === "blackout" ? "Tema escuro ativado" : "Tema claro ativado");
+    });
+
+    // Form Switching
+    function switchToRegister() {
+      document.getElementById("loginForm").removeAttribute("data-active");
+      document.getElementById("registerForm").setAttribute("data-active", "true");
+      clearErrors();
+    }
+
+    function switchToLogin() {
+      document.getElementById("registerForm").removeAttribute("data-active");
+      document.getElementById("loginForm").setAttribute("data-active", "true");
+      clearErrors();
+    }
+
+    // Error Display
+    function showError(formType, message) {
+      const errorElement = document.getElementById(formType + "Error");
+      if (errorElement) {
+        errorElement.textContent = message;
+      }
+    }
+
+    function clearErrors() {
+      document.getElementById("loginError").textContent = "";
+      document.getElementById("registerError").textContent = "";
+    }
+
+    // Toast Notification
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(function () {
+        toast.classList.remove("is-visible");
+      }, 2200);
+    }
+
+    // Validation Functions
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    function validatePassword(password) {
+      return password.length >= 6;
+    }
+
+    // Login Handler
+    document.getElementById("loginFormElement").addEventListener("submit", function (e) {
+      e.preventDefault();
+      clearErrors();
+
+      const email = this.querySelector('[name="login-email"]').value.trim();
+      const password = this.querySelector('[name="login-password"]').value;
+
+      if (!email) {
+        showError("login", "Digite seu email ou usuário");
+        return;
+      }
+
+      if (!password) {
+        showError("login", "Digite sua senha");
+        return;
+      }
+
+      // Simulate authentication
+      const userData = {
+        id: "user-1",
+        name: email.split("@")[0],
+        email: email,
+        loginTime: new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      showToast("Bem-vindo de volta, " + userData.name + "! 🎉");
+
+      // Redirect to main app after 500ms
+      setTimeout(function () {
+        window.location.href = "./index.html";
+      }, 500);
+    });
+
+    // Register Handler
+    document.getElementById("registerFormElement").addEventListener("submit", function (e) {
+      e.preventDefault();
+      clearErrors();
+
+      const name = this.querySelector('[name="register-name"]').value.trim();
+      const email = this.querySelector('[name="register-email"]').value.trim();
+      const password = this.querySelector('[name="register-password"]').value;
+      const confirm = this.querySelector('[name="register-confirm"]').value;
+      const terms = this.querySelector('[name="register-terms"]').checked;
+
+      if (!name) {
+        showError("register", "Digite seu nome completo");
+        return;
+      }
+
+      if (!email || !validateEmail(email)) {
+        showError("register", "Digite um email válido");
+        return;
+      }
+
+      if (!validatePassword(password)) {
+        showError("register", "A senha deve ter pelo menos 6 caracteres");
+        return;
+      }
+
+      if (password !== confirm) {
+        showError("register", "As senhas não coincidem");
+        return;
+      }
+
+      if (!terms) {
+        showError("register", "Você precisa concordar com os Termos de Serviço");
+        return;
+      }
+
+      // Simulate account creation
+      const userData = {
+        id: "user-" + Date.now(),
+        name: name,
+        email: email,
+        avatar: "https://i.pravatar.cc/150?img=" + Math.floor(Math.random() * 70),
+        verified: false,
+        tagline: "Membro novo em Allnect 🎉",
+        bio: "Bem-vindo à minha página! Estou aqui para conectar, compartilhar e explorar.",
+        location: "",
+        work: "",
+        website: "",
+        registrationTime: new Date().toISOString()
+      };
+
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
+      showToast("Conta criada com sucesso, " + name + "! 🚀");
+
+      // Redirect to main app after 500ms
+      setTimeout(function () {
+        window.location.href = "./index.html";
+      }, 500);
+    });
+
+    // Initialize
+    applyTheme();
+
+    // Check if already logged in
+    if (localStorage.getItem(STORAGE_KEY)) {
+      window.location.href = "./index.html";
+    }
+  </script>
+</body>
+</html>
